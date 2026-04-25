@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import heroOcean from "@/assets/hero-ocean.jpg";
 import containerFloat from "@/assets/container-float.png";
-import shipVideo from "@/assets/Container_ship_arriving_202604242247.mp4";
+
+// Video is hosted externally (too large for Git). The poster image
+// (hero-ocean.jpg) acts as a static fallback when the video is unavailable.
+const SHIP_VIDEO_URL = "/assets/hero-ship.mp4";
 
 export function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -29,15 +32,19 @@ export function Hero() {
         data-parallax="0.4"
       >
         <video
-          src={shipVideo}
+          src={SHIP_VIDEO_URL}
           poster={heroOcean}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           className="w-full h-full object-cover"
           aria-label="Cargo ship sailing across the ocean"
+          onError={(e) => {
+            // If video fails to load, hide the element so the poster shows
+            (e.currentTarget as HTMLVideoElement).style.display = "none";
+          }}
         />
         <div className="absolute inset-0" style={{
           background: "linear-gradient(135deg, rgba(15,23,42,0.82) 0%, rgba(15,23,42,0.65) 60%, rgba(15,23,42,0.80) 100%)"
