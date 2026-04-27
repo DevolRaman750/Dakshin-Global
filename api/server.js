@@ -4,7 +4,7 @@ import server from "../dist/server/server.js";
 // Vercel serverless function entrypoint
 export default async function handler(req, res) {
   // Convert Node IncomingMessage to Web Request
-  const url = new URL(req.url || "/", \`http://\${req.headers.host}\`);
+  const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
   
   const headers = new Headers();
   for (const [key, value] of Object.entries(req.headers)) {
