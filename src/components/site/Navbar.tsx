@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import logo from "@/assets/logo.jpeg";
 
 const links = [
   { href: "#home", label: "Home" },
@@ -28,8 +29,8 @@ export function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-2 group">
-          <span className="w-2 h-2 rounded-full bg-brand group-hover:scale-150 transition-transform" />
+        <a href="#home" className="flex items-center gap-3 group">
+          <img src={logo} alt="Dakshin Global" className="w-10 h-10 object-contain rounded-full group-hover:scale-105 transition-transform" />
           <span className={`font-display text-xl tracking-[0.2em] transition-colors duration-500 ${scrolled ? "" : "text-white"}`}>
             <span className={scrolled ? "text-[#C8530A]" : ""}>DAKSHIN</span>{" "}
             <span className={scrolled ? "text-[#0F172A]" : ""}>GLOBAL</span>

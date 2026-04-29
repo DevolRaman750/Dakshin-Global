@@ -1,37 +1,110 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import heroOcean from "@/assets/hero-ocean.jpg";
 import containerFloat from "@/assets/container-float.png";
+
+/* ── Cloud-hosted videos (NOT bundled with the site) ────────────── */
+const HERO_SHIP_VIDEO_URL =
+  "https://7e467956-f552-4be2-bd76-7cb50b6d6060.lovableproject.com/__l5e/assets-v1/f611d5ba-85dc-454b-b0da-4fc2b9bb0141/hero-ship.mp4";
+const FLOW_VIDEO_URL = "https://files.catbox.moe/7zehot.mp4";
 
 export function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
 
+  /* ── Parallax mouse-follow ──────────────────────────────────── */
   useEffect(() => {
-    let mouseX = 0, mouseY = 0;
     const onMouse = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 40;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 40;
+      const mx = (e.clientX / window.innerWidth - 0.5) * 40;
+      const my = (e.clientY / window.innerHeight - 0.5) * 40;
       if (bgRef.current) {
-        bgRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) scale(1.1)`;
+        bgRef.current.style.transform = `translate3d(${mx}px, ${my}px, 0) scale(1.1)`;
       }
     };
     window.addEventListener("mousemove", onMouse);
     return () => window.removeEventListener("mousemove", onMouse);
   }, []);
 
+  /* ── Sequential video crossfade logic ───────────────────────── */
+  const crossfade = useCallback(
+    (from: HTMLVideoElement | null, to: HTMLVideoElement | null) => {
+      if (!from || !to) return;
+      // Start the next video from the beginning
+      to.currentTime = 0;
+      to.play().catch(() => {});
+      // Smooth crossfade via CSS transition (opacity handled by class)
+      to.style.opacity = "1";
+      from.style.opacity = "0";
+    },
+    []
+  );
+
+  useEffect(() => {
+    const vidA = videoARef.current; // hero-ship (plays first)
+    const vidB = videoBRef.current; // flow
+
+    if (!vidA || !vidB) return;
+
+    // When video A (hero-ship) ends → crossfade to video B (flow)
+    const onEndA = () => crossfade(vidA, vidB);
+    // When video B (flow) ends → crossfade back to video A (hero-ship)
+    const onEndB = () => crossfade(vidB, vidA);
+
+    vidA.addEventListener("ended", onEndA);
+    vidB.addEventListener("ended", onEndB);
+
+    // Kick off video A
+    vidA.play().catch(() => {});
+
+    return () => {
+      vidA.removeEventListener("ended", onEndA);
+      vidB.removeEventListener("ended", onEndB);
+    };
+  }, [crossfade]);
+
+  /* shared style for both <video> elements */
+  const videoStyle: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    transition: "opacity 1.2s ease-in-out",
+  };
+
   return (
     <section id="home" className="relative min-h-screen w-full overflow-hidden bg-[#0F172A]">
-      {/* Parallax background — looping cinematic ship image */}
+      {/* Parallax background — sequential cinematic videos */}
       <div
         ref={bgRef}
         className="absolute inset-0 transition-transform duration-[400ms] ease-out will-change-transform"
         data-parallax="0.4"
       >
-        <img
-          src={heroOcean}
-          alt="Cargo ship sailing across the ocean"
-          className="w-full h-full object-cover"
-        />
+        {/* Video A — hero-ship (Lovable CDN) — plays first */}
+        <video
+          ref={videoARef}
+          muted
+          playsInline
+          preload="auto"
+          poster={heroOcean}
+          style={{ ...videoStyle, opacity: 1 }}
+        >
+          <source src={HERO_SHIP_VIDEO_URL} type="video/mp4" />
+        </video>
+
+        {/* Video B — flow (Catbox CDN) — plays after A finishes */}
+        <video
+          ref={videoBRef}
+          muted
+          playsInline
+          preload="auto"
+          style={{ ...videoStyle, opacity: 0 }}
+        >
+          <source src={FLOW_VIDEO_URL} type="video/mp4" />
+        </video>
+
+        {/* Gradient overlay */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(135deg, rgba(15,23,42,0.82) 0%, rgba(15,23,42,0.65) 60%, rgba(15,23,42,0.80) 100%)"
         }} />
@@ -98,3 +171,4 @@ export function Hero() {
     </section>
   );
 }
+

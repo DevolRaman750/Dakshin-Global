@@ -1,10 +1,12 @@
+import logo from "@/assets/logo.jpeg";
+
 export function Footer() {
   return (
     <footer className="bg-[#0F172A] border-t-2 border-[#C8530A] pt-20 pb-8">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-4 gap-12">
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <span className="w-2 h-2 rounded-full bg-brand" />
+          <div className="flex items-center gap-3 mb-4">
+            <img src={logo} alt="Dakshin Global" className="w-10 h-10 object-contain rounded-full" />
             <span className="font-display text-lg tracking-[0.2em] text-white">DAKSHIN GLOBAL</span>
           </div>
           <p className="text-[#94A3B8] text-sm leading-relaxed mb-4">From Indian Shores to Australian Doors.</p>
