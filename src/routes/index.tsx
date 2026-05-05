@@ -3,7 +3,7 @@ import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { WhoWeServe } from "@/components/site/WhoWeServe";
-import { ShipScrollAnimation } from "@/components/site/ShipScrollAnimation";
+
 import { CargoMatters } from "@/components/site/CargoMatters";
 import { Crossing } from "@/components/site/Crossing";
 import { TrustUs } from "@/components/site/TrustUs";
@@ -26,7 +26,7 @@ function Index() {
       <Hero />
       <TrustBar />
       <WhoWeServe />
-      <ShipScrollAnimation />
+
       <CargoMatters />
       <Crossing />
       <TrustUs />
