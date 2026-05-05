@@ -1,5 +1,6 @@
 import crossingOcean from "@/assets/Cargo vessel crossing the Indian Ocean at sunset.png";
 import personalShipping from "@/assets/personal-shipping.png";
+import sourcingVerification from "@/assets/sourcing-verification.png";
 import containerLoading from "@/assets/container-loading-port.png";
 import oceanTracking from "@/assets/ocean-tracking.png";
 import customsClearance from "@/assets/customs-clearance.png";
@@ -61,7 +62,7 @@ const steps = [
     body: "We verify the source before the box is taped. Whether it's your personal effects from home or B2B inventory from Indian manufacturers, we inspect, verify quality, and prepare everything for export at origin.",
     coord: "13.0827°N, 80.2707°E",
     side: "left" as const,
-    image: personalShipping,
+    image: sourcingVerification,
   },
   {
     label: "CHENNAI PORT",
@@ -113,32 +114,34 @@ const steps = [
 export function Crossing() {
   return (
     <section id="how" className="relative overflow-hidden">
-      {/* ── Hero banner — cinematic ocean crossing ────────────── */}
-      <div className="relative h-[340px] md:h-[440px] overflow-hidden">
-        <img
-          src={crossingOcean}
-          alt="Cargo ship crossing the Indian Ocean at sunset"
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.45) 50%, rgba(15,23,42,0.25) 100%)",
-          }}
-        />
-        {/* Bottom text overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 z-10">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-            5.0°N · 85.0°E · INDIAN OCEAN
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl text-white leading-tight tracking-wide mt-1">
-            Chennai → Port Botany
-          </h2>
-          <p className="text-sm md:text-base text-white/60 mt-1">
-            Avg. transit: 18–22 days · Direct carrier routes
-          </p>
+      {/* ── Hero banner — cinematic ocean crossing (75% width, centered) ── */}
+      <div className="bg-[#F4F6F8] py-10 md:py-16 px-6">
+        <div className="relative w-full max-w-[75%] mx-auto h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+          <img
+            src={crossingOcean}
+            alt="Cargo ship crossing the Indian Ocean at sunset"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.45) 50%, rgba(15,23,42,0.25) 100%)",
+            }}
+          />
+          {/* Bottom text overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 z-10">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
+              5.0°N · 85.0°E · INDIAN OCEAN
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl text-white leading-tight tracking-wide mt-1">
+              Chennai → Port Botany
+            </h2>
+            <p className="text-sm md:text-base text-white/60 mt-1">
+              Avg. transit: 18–22 days · Direct carrier routes
+            </p>
+          </div>
         </div>
       </div>
 

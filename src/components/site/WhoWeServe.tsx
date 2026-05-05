@@ -77,11 +77,11 @@ function ScenarioCard({
       style={{ animationDelay: `${index * 120}ms` }}
     >
       {/* Image card */}
-      <div className="relative w-full min-h-[340px] md:min-h-[420px] overflow-hidden">
+      <div className="relative w-full min-h-[380px] md:min-h-[460px] overflow-hidden">
         <img
           src={card.image}
           alt={card.heading}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
         {/* Dark gradient overlay — bottom half */}
